@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter  } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //Utils
 import { handleUserInput } from '../../util/shared';
@@ -10,50 +13,46 @@ class UserPage extends Component {
     super(props);
 
     this.handleUserInput = handleUserInput.bind(this);
-    
+
   }
 
   render() {
     return (
-      <div className="user_page">
-        <form onSubmit={this.handleSubmit} id='template-mail'>
-          
-          <div className="form-group" >
-          { formErrors.name === true ? <div><p className="invalid-input">Name is required!</p></div>: null }
-            <label>Template Name</label>
-            <input className="form-control" name="name" onChange={(event) => this.handleUserInput(event, this)} autoFocus />
-            
-          </div>
-          <div className="form-group" >
-          { formErrors.from_name === true ? <div><p className="invalid-input">Field is required!</p></div>: null }  
-            <label>From name</label>
-            <input className="form-control" name="from_name" onChange={(event) => this.handleUserInput(event, this)} value={ this.state.from_name } />
-            
-          </div>
-          <div className="form-group" >
-          
-          <label>From name Line 2 (optional)</label>
-          <input className="form-control" name="from_name2" onChange={(event) => this.handleUserInput(event, this)} value={ this.state.from_name2 } />
-          
+      <div>
+        <form onSubmit={this.handleSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <Field name="email" component="input" type="text" />
+
+          <label htmlFor="pwd">Password</label>
+          <Field name="pwd" component="input" type="password" />
+
+          <label htmlFor="userName">User Name</label>
+          <Field name="userName" component="input" type="text" />
+
+          <label htmlFor="permission">Permission</label>
+          <Field name="permission" component="input" type="text" />
+
+          <button type="button" className="btn btn-outline-primary "><FontAwesomeIcon icon="plus" /></button>
         </div>
-        <div className="form-group" >
-        { formErrors.from_street_address === true ? <div><p className="invalid-input">Field is required!</p></div>: null }  
-          <label>From Address (Return Mail Address)</label>
-          <input className="form-control" name="from_street_address" onChange={(event) => this.handleUserInput(event, this)} value={ this.state.from_street_address } />
-          
-        </div>
-          <div className="form-group">
-            <div className="checkbox-label">
-              <label className="form-check-label">
-                <input className="form-check-input" name="use_mailhouse_return_address" type="checkbox" value={this.state.use_mailhouse_return_address} htmlFor="use_mailhouse_return_address" onChange={(event) => this.handleUserInputCheckbox(event, this)} />
-                <span className="m-2">Select Option to Use Mail house's return return address</span>
-            </label>
-            </div>
-          </div>             
         </form>
       </div>
     );
   }
+
+  handleSubmit(){
+    console.log('Fired');
+  }
 }
 
-export default withRouter(UserPage);
+const mapStateToProps = function(state) {
+  return {
+    
+  }
+}
+
+UserPage = reduxForm({
+  form: 'userForm'
+})(UserPage);
+
+export default connect(mapStateToProps)(withRouter(UserPage));

@@ -19,6 +19,7 @@ class Bar extends Component {
           <ul className="navbar-nav">
             <Option url={URL.HOME} label="HOME" />
             <Option url={URL.TRUCK} label="TRUCKS" />
+            <Option url={URL.USERS} label="USERS" icon="fas fa-users" />
           </ul>
         </div>
       </nav>
